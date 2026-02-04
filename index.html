@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mini Browser</title>
+    <style>
+      body { margin: 0; font-family: sans-serif; }
+      #toolbar {
+        display: flex;
+        padding: 6px;
+        background: #f0f0f0;
+        border-bottom: 1px solid #ccc;
+      }
+      #url {
+        flex: 1;
+        padding: 4px 8px;
+        font-size: 14px;
+      }
+      #go {
+        margin-left: 6px;
+        padding: 4px 10px;
+      }
+      #webview {
+        width: 100%;
+        height: calc(100vh - 40px);
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="toolbar">
+      <input id="url" type="text" placeholder="Enter URL…" />
+      <button id="go">Go</button>
+    </div>
+    <iframe id="webview" src="https://example.com" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+
+    <script>
+      const urlInput = document.getElementById('url');
+      const goBtn = document.getElementById('go');
+      const webview = document.getElementById('webview');
+
+      function navigate() {
+        let url = urlInput.value.trim();
+        if (!url) return;
+        if (!/^https?:\/\//i.test(url)) {
+          url = 'https://' + url;
+        }
+        webview.src = url;
+      }
+
+      goBtn.addEventListener('click', navigate);
+      urlInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') navigate();
+      });
+    </script>
+  </body>
+</html>
